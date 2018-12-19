@@ -26,10 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/userinfo")
 public class UserInfoController {
     @Autowired
-    UserCredenceReadService userCredenceReadService;
+    private UserCredenceReadService userCredenceReadService;
 
     /**
      * 根据登录名获取用户的详细信息
+     *
      * @param userCredenceInfoVO
      * @return String
      */
@@ -38,10 +39,10 @@ public class UserInfoController {
     public String findUserInfoByLoginName(@RequestBody UserCredenceInfoVO userCredenceInfoVO) {
         UserInfoVO userInfoVO = userCredenceReadService.findUserInfoByLoginName(userCredenceInfoVO);
         JSONObject jsonObject = new JSONObject();
-        if(userInfoVO != null){
-            return jsonObject.toJSONString(userInfoVO);
-        }else{
-            jsonObject.put("result","false");
+        if (userInfoVO != null) {
+            return JSONObject.toJSONString(userInfoVO);
+        } else {
+            jsonObject.put("result", "false");
             return jsonObject.toJSONString();
         }
     }

@@ -15,5 +15,5 @@ import cn.org.meteor.comp.vo.UserInfoVO;
  * @创建时间：2018/11/19 15:04
  */
 public interface UserCredenceReadService {
-    public UserInfoVO findUserInfoByLoginName(UserCredenceInfoVO userCredenceInfoInfoVO);
+    UserInfoVO findUserInfoByLoginName(UserCredenceInfoVO userCredenceInfoInfoVO);
 }

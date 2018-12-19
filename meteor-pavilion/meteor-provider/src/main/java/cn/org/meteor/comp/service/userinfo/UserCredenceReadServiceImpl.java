@@ -32,12 +32,12 @@ import java.util.List;
 @Service
 public class UserCredenceReadServiceImpl implements UserCredenceReadService {
     @Resource
-    UserCredenceInfoMapper userCredenceInfoMapper;
+    private UserCredenceInfoMapper userCredenceInfoMapper;
     @Resource
-    UserInfoMapper userInfoMapper;
+    private UserInfoMapper userInfoMapper;
 
 
-    @Cacheable(value = RedisUtil.METEOR_PREFIX+"meteor_user",key = "#userCredenceInfoInfoVO.loginName",unless = "#result == null")
+    @Cacheable(value = RedisUtil.METEOR_PREFIX + "meteor_user", key = "#userCredenceInfoInfoVO.loginName", unless = "#result == null")
     @Override
     public UserInfoVO findUserInfoByLoginName(UserCredenceInfoVO userCredenceInfoInfoVO) {
         try {
@@ -48,13 +48,13 @@ public class UserCredenceReadServiceImpl implements UserCredenceReadService {
             UserCredenceInfoExample userCredenceInfoExample = new UserCredenceInfoExample();
             userCredenceInfoExample.createCriteria().andLoginNameEqualTo(loginName);
             List<UserCredenceInfo> userCredenceInfos = userCredenceInfoMapper.selectByExample(userCredenceInfoExample);
-            if(!CollectionUtils.isEmpty(userCredenceInfos) && userCredenceInfos.size()==1){
+            if (!CollectionUtils.isEmpty(userCredenceInfos) && userCredenceInfos.size() == 1) {
                 uniqueid = userCredenceInfos.get(0).getUniqueid();
             }
-            if(StringUtils.isNotBlank(uniqueid)){
+            if (StringUtils.isNotBlank(uniqueid)) {
                 UserInfo userInfo = userInfoMapper.selectByPrimaryKey(uniqueid);
-                if(userInfo != null){
-                    PropertyUtils.copyProperties(userInfoVO,userInfo);
+                if (userInfo != null) {
+                    PropertyUtils.copyProperties(userInfoVO, userInfo);
                     return userInfoVO;
                 }
             }
