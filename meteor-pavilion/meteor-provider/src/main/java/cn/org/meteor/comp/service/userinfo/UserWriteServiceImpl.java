@@ -28,15 +28,23 @@ public class UserWriteServiceImpl implements UserWriteService {
 
     @Override
     public Long userRegisterByPassword(UserVO userVO) {
-        //TODO 校验用户是否被注册
+        checkUserExist(userVO);
+
         User user = UserConverter.toUserPO(userVO);
         initUser(user);
-        Long userId = userMapper.insert(user);
+        userMapper.insert(user);
 
         LoginAccount loginAccount = UserConverter.toLoginAccount(userVO);
-        initLoginAccount(loginAccount, userId);
+        initLoginAccount(loginAccount, user.getId());
         loginAccountMapper.insert(loginAccount);
-        return userId;
+        return user.getId();
+    }
+
+    private void checkUserExist(UserVO userVO) {
+        User byMobile = userMapper.findByMobile(userVO.getMobilePhone());
+        if (byMobile != null) {
+            throw new RuntimeException("该手机号已注册");
+        }
     }
 
     private void initUser(User user) {

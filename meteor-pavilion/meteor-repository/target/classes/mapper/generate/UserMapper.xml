@@ -3,7 +3,7 @@
 <mapper namespace="cn.org.meteor.comp.mapper.generate.UserMapper">
     <resultMap id="BaseResultMap" type="cn.org.meteor.comp.po.generate.User">
         <id column="ID" jdbcType="BIGINT" property="id"/>
-        <result column="UUID" jdbcType="BIGINT" property="UUID"/>
+        <result column="UUID" jdbcType="BIGINT" property="uuid"/>
         <result column="ALIAS_NAME" jdbcType="VARCHAR" property="aliasName"/>
         <result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone"/>
         <result column="USER_NAME" jdbcType="VARCHAR" property="userName"/>
@@ -68,5 +68,12 @@
             </if>
         </trim>
     </insert>
+
+    <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from t_user
+        <if test="mobilePhone != null">
+            where MOBILE_PHONE = #{mobilePhone}
+        </if>
+    </select>
 
 </mapper>
