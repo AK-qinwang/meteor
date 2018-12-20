@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.List;
 @EnableAutoConfiguration
 @SpringBootApplication
 @ComponentScan(basePackages = "cn.org.meteor.comp")
-@ImportResource("classpath:dubbo-provider.xml")
+//@ImportResource("classpath:dubbo-provider.xml")
 @EnableCaching
 public class Application {
     /**

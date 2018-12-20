@@ -29,11 +29,14 @@ public class LoginInterceptor implements HandlerInterceptor {
     private String swagger = "swagger";
     private String docs = "api-docs";
     private String undefined = "undefined";
+    private String passwordRegister = "passwordRegister";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String requestUrl = request.getRequestURL().toString();
-        if (requestUrl.contains(login) || requestUrl.contains(limit) || requestUrl.contains(push) || requestUrl.contains(getData) || requestUrl.contains(swagger) || requestUrl.contains(docs) || requestUrl.contains(docs) || requestUrl.contains("reRunRiskFlow")) {
+        if (requestUrl.contains(login) || requestUrl.contains(limit) || requestUrl.contains(push) ||
+                requestUrl.contains(getData) || requestUrl.contains(swagger) ||
+                requestUrl.contains(docs) || requestUrl.contains(docs) || requestUrl.contains("passwordRegister")) {
             return true;
         }
         //检查session中是否有用户
