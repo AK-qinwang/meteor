@@ -29,7 +29,7 @@ import java.util.List;
  */
 @EnableAutoConfiguration
 @SpringBootApplication
-@ComponentScan(basePackages = "cn.org.meteor.comp")
+//@ComponentScan(basePackages = "cn.org.meteor.comp")
 //@ImportResource("classpath:dubbo-provider.xml")
 @EnableCaching
 public class Application {

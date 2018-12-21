@@ -29,7 +29,6 @@ public class UserWriteServiceImpl implements UserWriteService {
     @Override
     public Long userRegisterByPassword(UserVO userVO) {
         checkUserExist(userVO);
-
         User user = UserConverter.toUserPO(userVO);
         initUser(user);
         userMapper.insert(user);

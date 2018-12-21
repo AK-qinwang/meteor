@@ -30,7 +30,7 @@ public class RegisterController {
     private UserWriteService userWriteService;
 
     @RequestMapping(value = "passwordRegister", method = RequestMethod.POST)
-    @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
+    @ApiOperation(value = "用户名密码注册", notes = "用户名密码注册", httpMethod = "POST")
     public String passwordRegister(@RequestBody RegisterRequest registerRequest) {
         Map<String, Object> data = new HashMap<>(16);
         try {
