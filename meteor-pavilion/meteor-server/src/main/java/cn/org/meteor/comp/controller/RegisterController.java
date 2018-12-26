@@ -1,6 +1,7 @@
 package cn.org.meteor.comp.controller;
 
 import cn.org.meteor.comp.converter.UserConverter;
+import cn.org.meteor.comp.exception.MeteorException;
 import cn.org.meteor.comp.request.RegisterRequest;
 import cn.org.meteor.comp.result.Result;
 import cn.org.meteor.comp.service.userinfo.UserWriteService;
@@ -38,8 +39,8 @@ public class RegisterController {
             UserVO userVO = UserConverter.toVO(registerRequest);
             Long userId = userWriteService.userRegisterByPassword(userVO);
             data.put("userId", userId);
-        } catch (Exception e) {
-            log.error("用户注册异常", e);
+        } catch (MeteorException e) {
+            log.error("RegisterController----->passwordRegister error,userName=" + registerRequest.getUserName(), e);
             return JSON.toJSONString(Result.fail(e));
         }
         return JSON.toJSONString(Result.success(data));

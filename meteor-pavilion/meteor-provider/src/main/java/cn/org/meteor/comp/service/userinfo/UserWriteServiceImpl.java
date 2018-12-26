@@ -1,6 +1,8 @@
 package cn.org.meteor.comp.service.userinfo;
 
 import cn.org.meteor.comp.enumeration.StatusEnum;
+import cn.org.meteor.comp.exception.MeteorException;
+import cn.org.meteor.comp.exception.userInfo.UserInfoException;
 import cn.org.meteor.comp.mapper.generate.LoginAccountMapper;
 import cn.org.meteor.comp.mapper.generate.UserMapper;
 import cn.org.meteor.comp.po.generate.LoginAccount;
@@ -8,6 +10,7 @@ import cn.org.meteor.comp.po.generate.User;
 import cn.org.meteor.comp.service.userinfo.converter.UserConverter;
 import cn.org.meteor.comp.util.UUIDUtil;
 import cn.org.meteor.comp.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +22,7 @@ import java.time.LocalDateTime;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class UserWriteServiceImpl implements UserWriteService {
 
     @Resource
@@ -27,18 +31,22 @@ public class UserWriteServiceImpl implements UserWriteService {
     private LoginAccountMapper loginAccountMapper;
 
     @Override
-    public Long userRegisterByPassword(UserVO userVO) {
-        //TODO 验证验证码
+    public Long userRegisterByPassword(UserVO userVO) throws MeteorException {
+        try {
+            checkUserExist(userVO);
+            User user = UserConverter.toUserPO(userVO);
+            initUser(user);
+            userMapper.insert(user);
 
-        checkUserExist(userVO);
-        User user = UserConverter.toUserPO(userVO);
-        initUser(user);
-        userMapper.insert(user);
+            LoginAccount loginAccount = UserConverter.toLoginAccount(userVO);
+            initLoginAccount(loginAccount, user.getId());
+            loginAccountMapper.insert(loginAccount);
+            return user.getId();
+        } catch (Exception e) {
+            log.error("UserWriteServiceImpl----->userRegisterByPassword error",e);
+            throw new UserInfoException(UserInfoException.REGISTER_USER_ERROR,null,e);
+        }
 
-        LoginAccount loginAccount = UserConverter.toLoginAccount(userVO);
-        initLoginAccount(loginAccount, user.getId());
-        loginAccountMapper.insert(loginAccount);
-        return user.getId();
     }
 
     private void checkUserExist(UserVO userVO) {
