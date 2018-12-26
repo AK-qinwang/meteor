@@ -1,0 +1,10 @@
+*.iml
+*.lst
+meteor-pavilion/.idea/
+*.png
+*.class
+*.js
+*.css
+*.gif
+*.ftl
+meteor-pavilion/meteor-server/target/

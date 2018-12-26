@@ -2,9 +2,11 @@ package cn.org.meteor.comp.controller;
 
 import cn.org.meteor.comp.converter.UserConverter;
 import cn.org.meteor.comp.exception.MeteorException;
+import cn.org.meteor.comp.exception.userInfo.UserInfoException;
 import cn.org.meteor.comp.request.RegisterRequest;
 import cn.org.meteor.comp.result.Result;
 import cn.org.meteor.comp.service.userinfo.UserWriteService;
+import cn.org.meteor.comp.service.userinfo.UserWriteServiceImpl;
 import cn.org.meteor.comp.validator.UserValidator;
 import cn.org.meteor.comp.vo.UserVO;
 import com.alibaba.fastjson.JSON;

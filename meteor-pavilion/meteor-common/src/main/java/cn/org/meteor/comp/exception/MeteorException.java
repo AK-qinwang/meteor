@@ -42,6 +42,14 @@ public class MeteorException extends BaseException{
      */
     public MeteorException(String message) {
         super(message);
+    } /**
+     * 构造方法
+     *
+     * @param message
+     *            异常信息
+     */
+    public MeteorException(String message,String errorCode) {
+        super(message,errorCode);
     }
 
     /**
@@ -95,6 +103,7 @@ public class MeteorException extends BaseException{
      *
      * @return 获得本地化后的异常信息
      */
+    @Override
     public String getL10NMessage(Locale locale) {
         return super.getL10NMessage(locale);
     }
@@ -104,6 +113,7 @@ public class MeteorException extends BaseException{
      *
      * @return
      */
+    @Override
     public String getCompleteL10NMessage(Locale locale) {
         return super.getCompleteL10NMessage(locale);
     }

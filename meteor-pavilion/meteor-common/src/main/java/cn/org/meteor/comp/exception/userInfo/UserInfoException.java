@@ -18,18 +18,19 @@ public class UserInfoException extends MeteorException {
     public UserInfoException(String message) {
         super(message);
     }
+
+    public UserInfoException(String message, String errorCode) {
+        super(message, errorCode);
+    }
+
     /**
      * 构造方法
      *
-     * @param errorCode
-     *            错误码
-     * @param argsKey
-     *            错误信息中参数对应的KEY
-     * @param nestedException
-     *            异常历史
+     * @param errorCode       错误码
+     * @param argsKey         错误信息中参数对应的KEY
+     * @param nestedException 异常历史
      */
-    public UserInfoException(String errorCode, String[] argsKey,
-                             Throwable nestedException) {
+    public UserInfoException(String errorCode, String[] argsKey, Throwable nestedException) {
         super(RESOURCE_BUNDLE_NAME, errorCode, argsKey, nestedException);
     }
 
@@ -37,5 +38,5 @@ public class UserInfoException extends MeteorException {
         super(RESOURCE_BUNDLE_NAME, errorCode, argsKey, null);
     }
 
-    public static String REGISTER_USER_ERROR="101000";
+    public static String REGISTER_USER_ERROR = "101000";
 }

@@ -1,5 +1,6 @@
 package cn.org.meteor.comp.service.userinfo;
 
+import cn.org.meteor.comp.enumeration.ResultCodeEnum;
 import cn.org.meteor.comp.enumeration.StatusEnum;
 import cn.org.meteor.comp.exception.MeteorException;
 import cn.org.meteor.comp.exception.userInfo.UserInfoException;
@@ -32,41 +33,44 @@ public class UserWriteServiceImpl implements UserWriteService {
 
     @Override
     public Long userRegisterByPassword(UserVO userVO) throws MeteorException {
-        try {
-            checkUserExist(userVO);
-            User user = UserConverter.toUserPO(userVO);
-            initUser(user);
-            userMapper.insert(user);
+        checkUserExist(userVO);
+        User user = initUser(userVO);
+        userMapper.insert(user);
 
-            LoginAccount loginAccount = UserConverter.toLoginAccount(userVO);
-            initLoginAccount(loginAccount, user.getId());
-            loginAccountMapper.insert(loginAccount);
-            return user.getId();
-        } catch (Exception e) {
-            log.error("UserWriteServiceImpl----->userRegisterByPassword error",e);
-            throw new UserInfoException(UserInfoException.REGISTER_USER_ERROR,null,e);
-        }
-
+        LoginAccount loginAccount = initLoginAccount(userVO, user.getId());
+        loginAccountMapper.insert(loginAccount);
+        return user.getId();
     }
 
-    private void checkUserExist(UserVO userVO) {
+    private void checkUserExist(UserVO userVO) throws UserInfoException {
         User byMobile = userMapper.findByMobile(userVO.getMobilePhone());
         if (byMobile != null) {
-            throw new RuntimeException("该手机号已注册");
+            throw new UserInfoException("该手机号已注册", ResultCodeEnum.REGISTER_USER_ERROR.getErrorCode());
         }
     }
 
-    private void initUser(User user) {
+    private User initUser(UserVO userVO) {
+        User user = new User();
+        user.setAliasName(userVO.getAliasName());
+        user.setMobilePhone(userVO.getMobilePhone());
+        user.setStatus(userVO.getStatus());
+        user.setUuid(userVO.getUuid());
         user.setStatus(StatusEnum.ENABLE.getValue());
         user.setUuid(UUIDUtil.getSSNTime());
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
+        return user;
     }
 
-    private void initLoginAccount(LoginAccount loginAccount, Long userId) {
+    private LoginAccount initLoginAccount(UserVO userVO, Long userId) {
+        LoginAccount loginAccount = new LoginAccount();
+        loginAccount.setLoginName(userVO.getMobilePhone());
+        loginAccount.setPassword(userVO.getPassword());
+        loginAccount.setStatus(userVO.getStatus());
         loginAccount.setUserId(userId);
         loginAccount.setStatus(StatusEnum.ENABLE.getValue());
         loginAccount.setCreateTime(LocalDateTime.now());
         loginAccount.setUpdateTime(LocalDateTime.now());
+        return loginAccount;
     }
 }
