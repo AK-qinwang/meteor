@@ -28,6 +28,8 @@ public class UserWriteServiceImpl implements UserWriteService {
 
     @Override
     public Long userRegisterByPassword(UserVO userVO) {
+        //TODO 验证验证码
+
         checkUserExist(userVO);
         User user = UserConverter.toUserPO(userVO);
         initUser(user);

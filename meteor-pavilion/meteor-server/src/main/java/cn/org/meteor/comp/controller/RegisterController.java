@@ -36,7 +36,8 @@ public class RegisterController {
         try {
             UserValidator.checkUser(registerRequest);
             UserVO userVO = UserConverter.toVO(registerRequest);
-            userWriteService.userRegisterByPassword(userVO);
+            Long userId = userWriteService.userRegisterByPassword(userVO);
+            data.put("userId", userId);
         } catch (Exception e) {
             log.error("用户注册异常", e);
             return JSON.toJSONString(Result.fail(e));

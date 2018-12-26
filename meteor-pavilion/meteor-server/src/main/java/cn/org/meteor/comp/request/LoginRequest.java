@@ -9,15 +9,9 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "RegisterRequest", description = "用户注册对象")
-public class RegisterRequest {
-    @ApiModelProperty(value = "应用别名", name = "aliasName", example = "alipay", required = true)
-    private String aliasName;
-    @ApiModelProperty(value = "手机号", name = "mobilePhone", example = "1375656756", required = true)
-    private String mobilePhone;
+public class LoginRequest {
     @ApiModelProperty(value = "密码(前端md5加密)", name = "password", example = "123456", required = true)
     private String password;
     @ApiModelProperty(value = "用户名", name = "userName", example = "张三")
     private String userName;
-    @ApiModelProperty(value = "验证码", name = "verificationCode", example = "123456")
-    private String verificationCode;
 }
