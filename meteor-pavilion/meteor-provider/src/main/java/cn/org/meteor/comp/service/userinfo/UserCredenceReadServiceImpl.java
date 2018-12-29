@@ -18,11 +18,13 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.omg.CORBA.UserException;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * *************************************************************************
@@ -43,7 +45,8 @@ public class UserCredenceReadServiceImpl implements UserCredenceReadService {
     private UserInfoMapper userInfoMapper;
     @Resource
     private LoginAccountMapper loginAccountMapper;
-
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Cacheable(value = RedisUtil.METEOR_PREFIX + "meteor_user", key = "#userCredenceInfoInfoVO.loginName", unless = "#result == null")
     @Override
@@ -85,6 +88,8 @@ public class UserCredenceReadServiceImpl implements UserCredenceReadService {
         }
         //生成token
         String token = TokenUtil.getToken(loginVO.getLoginName(), loginVO.getPassword());
+        //存入redis
+        redisTemplate.opsForValue().set("token", token, 60 * 30, TimeUnit.MILLISECONDS);
         return token;
     }
 }
