@@ -76,7 +76,7 @@ public class UserCredenceReadServiceImpl implements UserCredenceReadService {
     @Override
     public String loginByPassword(LoginVO loginVO) throws Exception {
         //获取账户信息
-        LoginAccount byLoginName = loginAccountMapper.findByLoginName(loginVO.getUserName());
+        LoginAccount byLoginName = loginAccountMapper.findByLoginName(loginVO.getLoginName());
         if (byLoginName == null) {
             throw new UserInfoException("该用户不存在", ResultCodeEnum.USER_NOT_EXIST_ERROR.getCode());
         }
@@ -84,7 +84,7 @@ public class UserCredenceReadServiceImpl implements UserCredenceReadService {
             throw new UserInfoException("密码错误", ResultCodeEnum.PASSWORD_ERROR.getCode());
         }
         //生成token
-        String token = TokenUtil.getToken(loginVO.getUserName(), loginVO.getPassword());
+        String token = TokenUtil.getToken(loginVO.getLoginName(), loginVO.getPassword());
         return token;
     }
 }

@@ -10,9 +10,12 @@ import cn.org.meteor.comp.validator.LoginValidator;
 import cn.org.meteor.comp.vo.LoginVO;
 import cn.org.meteor.comp.vo.UserCredenceInfoVO;
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/login")
-@ApiOperation("登录")
+@Api(description = "用户", tags = {"用户"})
 @Slf4j
 public class LoginController {
 
@@ -46,15 +49,16 @@ public class LoginController {
     }
 
     @PostMapping(value = "loginByPassword")
-    public String loginByPassword(@RequestBody LoginRequest loginRequest) {
+    @ApiOperation(value = "密码登录", notes = "密码登录", httpMethod = "POST")
+    public Result loginByPassword(@RequestBody LoginRequest loginRequest) {
         try {
             LoginValidator.checkLogin(loginRequest);
             LoginVO loginVO = LoginConverter.toVO(loginRequest);
-            return userCredenceReadService.loginByPassword(loginVO);
+            String token = userCredenceReadService.loginByPassword(loginVO);
+            return Result.success(token);
         } catch (Exception e) {
-            log.error("注册异常:{}", JSON.toJSONString(loginRequest));
+            return Result.fail(e);
         }
-        return JSON.toJSONString(Result.success());
     }
 
     @RequestMapping("/portal")

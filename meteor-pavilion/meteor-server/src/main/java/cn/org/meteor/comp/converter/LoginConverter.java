@@ -9,7 +9,7 @@ import cn.org.meteor.comp.vo.UserVO;
 public class LoginConverter {
     public static LoginVO toVO(LoginRequest loginRequest) {
         LoginVO loginVO = new LoginVO();
-        loginVO.setUserName(loginRequest.getUserName());
+        loginVO.setLoginName(loginRequest.getLoginName());
         loginVO.setPassword(loginRequest.getPassword());
         return loginVO;
     }

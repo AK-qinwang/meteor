@@ -23,7 +23,7 @@ import java.util.Map;
  * @author JC
  */
 @Slf4j
-@Api(description = "用户注册登录", tags = {"用户"})
+@Api(description = "用户", tags = {"用户"})
 @RestController
 public class RegisterController {
     @Resource
@@ -39,7 +39,6 @@ public class RegisterController {
             Long userId = userWriteService.userRegisterByPassword(userVO);
             data.put("userId", userId);
         } catch (MeteorException e) {
-            log.error("RegisterController----->passwordRegister error,userName=" + registerRequest.getUserName(), e);
             return JSON.toJSONString(Result.fail(e));
         }
         return JSON.toJSONString(Result.success(data));

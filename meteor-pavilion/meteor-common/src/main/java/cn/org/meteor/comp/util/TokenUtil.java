@@ -21,11 +21,13 @@ public class TokenUtil {
         //生成签名密钥
         Key signingKey = generalKey();
         //添加构成JWT的参数
-        JwtBuilder builder = Jwts.builder().setId("1").setHeaderParam("typ", "JWT")
+        JwtBuilder builder = Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("alg", "HS256")
                 .claim("userName", userName)
                 .claim("password", password)
-                .setIssuedAt(now);
-        builder.signWith(signatureAlgorithm, signingKey);
+                .setIssuedAt(now)
+                .signWith(signatureAlgorithm, signingKey);
         //生成JWT
         return builder.compact();
     }
