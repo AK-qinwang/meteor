@@ -1,6 +1,7 @@
 package cn.org.meteor.comp.exception;
 
 
+import cn.org.meteor.comp.enumeration.ResultCodeEnum;
 import cn.org.meteor.comp.locale.L10NMessage;
 import cn.org.meteor.comp.locale.ResourceBundleCache;
 
@@ -30,14 +31,18 @@ public class BaseException extends Exception implements L10NMessage {
     // 异常历史
     private Throwable originalException = null;
     // 错误信息文件缓存
-    private static ResourceBundleCache amCache = ResourceBundleCache
-            .getInstance();
+    private static ResourceBundleCache amCache = ResourceBundleCache.getInstance();
     // 错误信息文件名
     private String bundleName = null;
     // 错误信息，文件句柄
     private ResourceBundle bundle = null;
 
     public BaseException() {
+    }
+
+    public BaseException(ResultCodeEnum resultCodeEnum) {
+        this.errorCode = resultCodeEnum.getCode();
+        this.message = resultCodeEnum.getDesc();
     }
 
     /**
@@ -72,8 +77,7 @@ public class BaseException extends Exception implements L10NMessage {
      * @param errorCode         错误码（文件中的KEY）
      * @param originalException 异常历史
      */
-    public BaseException(String rbName, String errorCode,
-                         Throwable originalException) {
+    public BaseException(String rbName, String errorCode, Throwable originalException) {
         this.errorCode = errorCode;
         this.bundleName = rbName;
         this.originalException = originalException;
@@ -87,8 +91,7 @@ public class BaseException extends Exception implements L10NMessage {
      * @param argsKey           错误信息中参数使用的KEY
      * @param originalException
      */
-    public BaseException(String rbName, String errorCode, String[] argsKey,
-                         Throwable originalException) {
+    public BaseException(String rbName, String errorCode, String[] argsKey, Throwable originalException) {
         this.bundleName = rbName;
         this.errorCode = errorCode;
         if (argsKey != null) {
@@ -114,7 +117,6 @@ public class BaseException extends Exception implements L10NMessage {
     @Override
     public String getL10NMessage(java.util.Locale locale) {
         String result = null;
-
         if (this.errorCode != null && this.bundleName != null && locale != null) {
             this.bundle = amCache.getResBundle(this.bundleName, locale);
             String mid = this.bundle.getString(this.errorCode);

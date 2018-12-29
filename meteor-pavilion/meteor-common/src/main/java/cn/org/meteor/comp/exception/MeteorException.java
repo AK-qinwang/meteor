@@ -1,5 +1,7 @@
 package cn.org.meteor.comp.exception;
 
+import cn.org.meteor.comp.enumeration.ResultCodeEnum;
+
 import java.util.Locale;
 
 /**
@@ -13,7 +15,7 @@ import java.util.Locale;
  * @版本: V1.0 @创建人：wangyangyang
  * @创建时间：2018/12/26 17:42
  */
-public class MeteorException extends BaseException{
+public class MeteorException extends BaseException {
     /**
      *
      */
@@ -29,7 +31,7 @@ public class MeteorException extends BaseException{
     //系统未被授权
     public static final String NOT_AUTHORITY_CODE = "100002";
 
-    public static final String NOT_AUTHORITY_MESSAGE="系统未被授权！";
+    public static final String NOT_AUTHORITY_MESSAGE = "系统未被授权！";
 
     //输入数据中含有非法参数
     public static final String Illegal_PARAM = "100003";
@@ -37,28 +39,30 @@ public class MeteorException extends BaseException{
     /**
      * 构造方法
      *
-     * @param message
-     *            异常信息
+     * @param message 异常信息
      */
     public MeteorException(String message) {
         super(message);
-    } /**
-     * 构造方法
-     *
-     * @param message
-     *            异常信息
-     */
-    public MeteorException(String message,String errorCode) {
-        super(message,errorCode);
     }
 
     /**
      * 构造方法
      *
-     * @param message
-     *            错误信息
-     * @param nestedException
-     *            异常历史
+     * @param message 异常信息
+     */
+    public MeteorException(String message, String errorCode) {
+        super(message, errorCode);
+    }
+
+    public MeteorException(ResultCodeEnum resultCodeEnum) {
+        super(resultCodeEnum);
+    }
+
+    /**
+     * 构造方法
+     *
+     * @param message         错误信息
+     * @param nestedException 异常历史
      */
     public MeteorException(String message, Throwable nestedException) {
         super(message, nestedException);
@@ -66,9 +70,10 @@ public class MeteorException extends BaseException{
 
     /**
      * 构造方法
-     * @param rbName 错误资源文件名
-     * @param errorCode 错误码
-     * @param argsKey 错误信息中的参数值所使用的KEY
+     *
+     * @param rbName          错误资源文件名
+     * @param errorCode       错误码
+     * @param argsKey         错误信息中的参数值所使用的KEY
      * @param nestedException 异常历史
      */
     public MeteorException(String rbName, String errorCode, String[] argsKey,
@@ -76,8 +81,7 @@ public class MeteorException extends BaseException{
         super(rbName, errorCode, argsKey, nestedException);
     }
 
-    public MeteorException(String errorCode, String[] argsKey,
-                           Throwable nestedException) {
+    public MeteorException(String errorCode, String[] argsKey, Throwable nestedException) {
         super(RESOURCE_BUNDLE_NAME, errorCode, argsKey, nestedException);
     }
 
@@ -98,6 +102,7 @@ public class MeteorException extends BaseException{
     public String getCompleteL10NMessage() {
         return super.getCompleteL10NMessage(Locale.SIMPLIFIED_CHINESE);
     }
+
     /**
      * 获得本地化后的异常信息
      *

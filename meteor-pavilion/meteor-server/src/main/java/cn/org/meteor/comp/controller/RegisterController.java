@@ -13,10 +13,7 @@ import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -25,14 +22,14 @@ import java.util.Map;
 /**
  * @author JC
  */
-@Api(description = "用户注册登录", tags = {"用户"})
 @Slf4j
+@Api(description = "用户注册登录", tags = {"用户"})
 @RestController
 public class RegisterController {
     @Resource
     private UserWriteService userWriteService;
 
-    @RequestMapping(value = "passwordRegister", method = RequestMethod.POST)
+    @PostMapping(value = "passwordRegister")
     @ApiOperation(value = "用户名密码注册", notes = "用户名密码注册", httpMethod = "POST")
     public String passwordRegister(@RequestBody RegisterRequest registerRequest) {
         Map<String, Object> data = new HashMap<>(16);

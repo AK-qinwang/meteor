@@ -45,7 +45,7 @@ public class UserWriteServiceImpl implements UserWriteService {
     private void checkUserExist(UserVO userVO) throws UserInfoException {
         User byMobile = userMapper.findByMobile(userVO.getMobilePhone());
         if (byMobile != null) {
-            throw new UserInfoException("该手机号已注册", ResultCodeEnum.REGISTER_USER_ERROR.getErrorCode());
+            throw new UserInfoException("该手机号已注册", ResultCodeEnum.REGISTER_USER_ERROR.getCode());
         }
     }
 

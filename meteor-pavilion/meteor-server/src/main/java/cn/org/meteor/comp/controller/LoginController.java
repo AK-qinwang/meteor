@@ -1,16 +1,23 @@
 package cn.org.meteor.comp.controller;
 
 import cn.org.meteor.comp.converter.LoginConverter;
+import cn.org.meteor.comp.po.generate.UserInfo;
 import cn.org.meteor.comp.request.LoginRequest;
+import cn.org.meteor.comp.result.Result;
 import cn.org.meteor.comp.service.userinfo.UserCredenceReadService;
+import cn.org.meteor.comp.util.Annotation;
 import cn.org.meteor.comp.validator.LoginValidator;
 import cn.org.meteor.comp.vo.LoginVO;
 import cn.org.meteor.comp.vo.UserCredenceInfoVO;
+import com.alibaba.fastjson.JSON;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * *************************************************************************
@@ -25,11 +32,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/login")
-@ApiOperation("")
+@ApiOperation("登录")
+@Slf4j
 public class LoginController {
 
     @Autowired
-    UserCredenceReadService userCredenceReadService;
+    private UserCredenceReadService userCredenceReadService;
 
     @RequestMapping("/loginView")
     public String loginView(ModelMap result) {
@@ -37,11 +45,16 @@ public class LoginController {
         return "user/login";
     }
 
-    @RequestMapping(value = "loginByPassword", method = RequestMethod.POST)
+    @PostMapping(value = "loginByPassword")
     public String loginByPassword(@RequestBody LoginRequest loginRequest) {
-        LoginValidator.checkLogin(loginRequest);
-        LoginVO loginVO = LoginConverter.toVO(loginRequest);
-        return null;
+        try {
+            LoginValidator.checkLogin(loginRequest);
+            LoginVO loginVO = LoginConverter.toVO(loginRequest);
+            return userCredenceReadService.loginByPassword(loginVO);
+        } catch (Exception e) {
+            log.error("注册异常:{}", JSON.toJSONString(loginRequest));
+        }
+        return JSON.toJSONString(Result.success());
     }
 
     @RequestMapping("/portal")

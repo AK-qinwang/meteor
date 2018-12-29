@@ -1,5 +1,6 @@
 package cn.org.meteor.comp.exception.userInfo;
 
+import cn.org.meteor.comp.enumeration.ResultCodeEnum;
 import cn.org.meteor.comp.exception.MeteorException;
 
 /**
@@ -23,6 +24,10 @@ public class UserInfoException extends MeteorException {
         super(message, errorCode);
     }
 
+    public UserInfoException(ResultCodeEnum resultCodeEnum) {
+        super(resultCodeEnum);
+    }
+
     /**
      * 构造方法
      *
@@ -37,6 +42,4 @@ public class UserInfoException extends MeteorException {
     public UserInfoException(String errorCode, String[] argsKey) {
         super(RESOURCE_BUNDLE_NAME, errorCode, argsKey, null);
     }
-
-    public static String REGISTER_USER_ERROR = "101000";
 }
