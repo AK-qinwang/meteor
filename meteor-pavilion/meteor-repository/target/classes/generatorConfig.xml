@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="default" targetRuntime="MyBatis3">
+        <!--javaBean实现序列化接口-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+        <!-- genenat entity时,生成toString -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <!-- 自定义物理分页  可生成支持Mysql数据的limit  不支持Oracle -->
+        <!--<plugin type="org.mybatis.generator.plugins.PaginationPlugin" />-->
+
+        <!-- generate entity时，生成hashcode和equals方法-->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+
+        <!-- 此处是将Example改名为Criteria 当然 想改成什么都行~    -->
+        <!--   <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+             <property name="searchString" value="Example$" />
+             <property name="replaceString" value="Criteria" />
+
+           </plugin>-->
+
+        <!-- 此处是将UserMapper改名为UserDao 接口 当然 想改成什么都行~  -->
+        <!--  <plugin type="org.mybatis.generator.plugins.rename.">
+             <property name="searchString" value="Mapper$" />
+             <property name="replaceString" value="Dao" />
+          </plugin>-->
+
+
+        <!-- 防止生成的代码中有很多注释，加入下面的配置控制 -->
+        <commentGenerator>
+
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/meteor"
+                        userId="root" password="1234">
+        </jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+              NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 数据表对应的持久层  -->
+        <javaModelGenerator targetPackage="cn.org.meteor.comp.po.generate" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- daopper 映射配置文件 -->
+        <sqlMapGenerator targetPackage="mapper.generate"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+        <!-- mybatis3中的mapper接口 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.org.meteor.comp.mapper.generate" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+
+        <!-- 数据表进行生成操作 schema:相当于库名; tableName:表名; domainObjectName:对应的DO -->
+
+        <!--制定所有数据库表-->
+        <table schema="" tableName="USER_INFO"></table>
+        <table schema="" tableName="USER_CREDENCE_INFO"></table>
+    </context>
+</generatorConfiguration>

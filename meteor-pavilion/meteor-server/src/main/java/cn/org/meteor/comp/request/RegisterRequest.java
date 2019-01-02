@@ -14,8 +14,10 @@ public class RegisterRequest {
     private String aliasName;
     @ApiModelProperty(value = "手机号", name = "mobilePhone", example = "1375656756", required = true)
     private String mobilePhone;
-    @ApiModelProperty(value = "密码", name = "password", example = "123456", required = true)
+    @ApiModelProperty(value = "密码(前端md5加密)", name = "password", example = "123456", required = true)
     private String password;
     @ApiModelProperty(value = "用户名", name = "userName", example = "张三")
     private String userName;
+    @ApiModelProperty(value = "验证码", name = "verificationCode", example = "123456")
+    private String verificationCode;
 }

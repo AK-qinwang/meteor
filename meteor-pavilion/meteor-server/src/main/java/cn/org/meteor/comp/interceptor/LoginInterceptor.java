@@ -1,10 +1,7 @@
 package cn.org.meteor.comp.interceptor;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private String passwordRegister = "passwordRegister";
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
         String requestUrl = request.getRequestURL().toString();
         if (requestUrl.contains(login) || requestUrl.contains(limit) || requestUrl.contains(push) ||
                 requestUrl.contains(getData) || requestUrl.contains(swagger) ||
@@ -40,7 +37,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         //检查session中是否有用户
-         Object sessionUser = request.getSession().getAttribute("session_user");
+        Object sessionUser = request.getSession().getAttribute("session_user");
         if (sessionUser == null) {
             response.sendRedirect("login/loginView");
             return false;

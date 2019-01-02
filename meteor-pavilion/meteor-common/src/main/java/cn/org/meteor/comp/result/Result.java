@@ -1,6 +1,7 @@
 package cn.org.meteor.comp.result;
 
 
+import cn.org.meteor.comp.enumeration.ResultCodeEnum;
 import lombok.Data;
 
 @Data
@@ -15,8 +16,16 @@ public class Result {
         return new Result("success", data);
     }
 
+    public static Result success() {
+        return new Result(ResultCodeEnum.SECESS.getCode(), ResultCodeEnum.SECESS.getDesc());
+    }
+
+    public static Result fail() {
+        return new Result(ResultCodeEnum.FAIL.getCode(), ResultCodeEnum.FAIL.getDesc());
+    }
+
     public static Result fail(Object data) {
-        return new Result("fail", data);
+        return new Result(ResultCodeEnum.FAIL.getCode(), data);
     }
 
     public Result(String code, Object data) {

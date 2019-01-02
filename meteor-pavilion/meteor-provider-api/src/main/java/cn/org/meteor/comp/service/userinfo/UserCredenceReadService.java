@@ -1,5 +1,7 @@
 package cn.org.meteor.comp.service.userinfo;
 
+import cn.org.meteor.comp.po.generate.UserInfo;
+import cn.org.meteor.comp.vo.LoginVO;
 import cn.org.meteor.comp.vo.UserCredenceInfoVO;
 import cn.org.meteor.comp.vo.UserInfoVO;
 
@@ -16,4 +18,10 @@ import cn.org.meteor.comp.vo.UserInfoVO;
  */
 public interface UserCredenceReadService {
     UserInfoVO findUserInfoByLoginName(UserCredenceInfoVO userCredenceInfoInfoVO);
+
+    String loginByPassword(LoginVO loginVO) throws Exception;
+
+    String loginByVerificationCode(LoginVO loginVO) throws Exception;
+
+
 }

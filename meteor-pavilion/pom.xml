@@ -26,6 +26,13 @@
     </parent>
     <properties>
         <meteor.version>1.5.17.RELEASE</meteor.version>
+        <mysql.version>5.1.23</mysql.version>
+        <hikariCP.version>2.5.1</hikariCP.version>
+        <jasypt.version>2.0.0</jasypt.version>
+        <commons.version>3.5</commons.version>
+        <fastjson.version>1.1.31</fastjson.version>
+        <jjwt.version>0.9.0</jjwt.version>
+        <lombok.version>1.16.16</lombok.version>
     </properties>
     <distributionManagement>
         <snapshotRepository>
@@ -55,6 +62,10 @@
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${meteor.version}</version>
             </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+            </dependency>
             <!--SpringBoot和Mybatis的集成-->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -65,22 +76,27 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.23</version>
+                <version>${mysql.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.zaxxer</groupId>
                 <artifactId>HikariCP</artifactId>
-                <version>2.5.1</version>
+                <version>${hikariCP.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.5</version>
+                <version>${commons.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.1.31</version>
+                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -107,7 +123,12 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.16</version>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
