@@ -16,7 +16,6 @@ import cn.org.meteor.comp.vo.UserCredenceInfoVO;
 import cn.org.meteor.comp.vo.UserInfoVO;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.UserException;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -85,6 +84,22 @@ public class UserCredenceReadServiceImpl implements UserCredenceReadService {
         }
         if (!loginVO.getPassword().equals(byLoginName.getPassword())) {
             throw new UserInfoException("密码错误", ResultCodeEnum.PASSWORD_ERROR.getCode());
+        }
+        //生成token
+        String token = TokenUtil.getToken(loginVO.getLoginName(), loginVO.getPassword());
+        //存入redis
+        redisTemplate.opsForValue().set("token", token, 60 * 30, TimeUnit.MILLISECONDS);
+        return token;
+    }
+
+    @Override
+    public String loginByVerificationCode(LoginVO loginVO) throws Exception {
+        //验证验证码
+
+        //获取账户信息
+        LoginAccount byLoginName = loginAccountMapper.findByLoginName(loginVO.getLoginName());
+        if (byLoginName == null) {
+            throw new UserInfoException("该用户不存在", ResultCodeEnum.USER_NOT_EXIST_ERROR.getCode());
         }
         //生成token
         String token = TokenUtil.getToken(loginVO.getLoginName(), loginVO.getPassword());

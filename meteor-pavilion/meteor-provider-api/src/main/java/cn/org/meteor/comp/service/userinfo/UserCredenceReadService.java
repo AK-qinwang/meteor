@@ -21,5 +21,7 @@ public interface UserCredenceReadService {
 
     String loginByPassword(LoginVO loginVO) throws Exception;
 
+    String loginByVerificationCode(LoginVO loginVO) throws Exception;
+
 
 }

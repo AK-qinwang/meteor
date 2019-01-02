@@ -8,4 +8,5 @@ import java.io.Serializable;
 public class LoginVO implements Serializable {
     private String LoginName;
     private String password;
+    private String verificationCode;
 }

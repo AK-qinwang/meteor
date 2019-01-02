@@ -52,9 +52,21 @@ public class LoginController {
     @ApiOperation(value = "密码登录", notes = "密码登录", httpMethod = "POST")
     public Result loginByPassword(@RequestBody LoginRequest loginRequest) {
         try {
-            LoginValidator.checkLogin(loginRequest);
-            LoginVO loginVO = LoginConverter.toVO(loginRequest);
+            LoginValidator.checkPassWordLogin(loginRequest);
+            LoginVO loginVO = LoginConverter.toPasswordVO(loginRequest);
             String token = userCredenceReadService.loginByPassword(loginVO);
+            return Result.success(token);
+        } catch (Exception e) {
+            return Result.fail(e);
+        }
+    }
+    @PostMapping(value = "loginByVerificationCode")
+    @ApiOperation(value = "验证码登录", notes = "验证码登录", httpMethod = "POST")
+    public Result loginByVerificationCode(@RequestBody LoginRequest loginRequest) {
+        try {
+            LoginValidator.checkVerificationCodeLogin(loginRequest);
+            LoginVO loginVO = LoginConverter.toVerificationCodeVO(loginRequest);
+            String token = userCredenceReadService.loginByVerificationCode(loginVO);
             return Result.success(token);
         } catch (Exception e) {
             return Result.fail(e);
