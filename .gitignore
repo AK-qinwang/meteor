@@ -1,0 +1,12 @@
+meteor-pavilion/.idea/
+meteor-pavilion/meteor-common/target/classes/cn/org/meteor/comp/enumeration/ResultCodeEnum.class
+meteor-pavilion/meteor-common/target/classes/cn/org/meteor/comp/enumeration/StatusEnum.class
+*.class
+*.iml
+*.js
+*.png
+*.gif
+*.ftl
+*.css
+meteor-pavilion/meteor-server/target/test-classes/error.properties
+*.lst
