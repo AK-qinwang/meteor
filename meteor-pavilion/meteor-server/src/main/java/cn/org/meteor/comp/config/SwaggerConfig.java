@@ -1,4 +1,4 @@
-package cn.org.meteor.comp.cnfig;
+package cn.org.meteor.comp.config;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
