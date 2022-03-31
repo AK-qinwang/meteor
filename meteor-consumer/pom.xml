@@ -15,7 +15,7 @@
         <relativePath/>
     </parent>
     <properties>
-        <springboot.version>1.5.17.RELEASE</springboot.version>
+        <springboot.version>2.5.12</springboot.version>
     </properties>
     <dependencies>
         <!--Web相关依赖-->
