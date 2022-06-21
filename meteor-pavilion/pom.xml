@@ -26,7 +26,7 @@
     </parent>
     <properties>
         <meteor.version>1.5.17.RELEASE</meteor.version>
-        <mysql.version>5.1.23</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <hikariCP.version>2.5.1</hikariCP.version>
         <jasypt.version>2.0.0</jasypt.version>
         <commons.version>3.5</commons.version>
